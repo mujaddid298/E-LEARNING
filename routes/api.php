@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CourseController;
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -18,12 +19,21 @@ Route::get('/user', function (Request $request) {
 
 
 
-Route::post('/register', [AuthController::class,'register']);
-Route::post('/login', [AuthController::class,'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'role:lecturer'])->group(function () {
 
-    Route::post('/logout', [AuthController::class,'logout']);
-    Route::get('/me', [AuthController::class,'me']);
+    Route::get('/courses', [CourseController::class, 'index']);
+    Route::post('/courses', [CourseController::class, 'store']);
+    Route::put('/courses/{id}', [CourseController::class, 'update']);
+    Route::delete('/courses/{id}', [CourseController::class, 'destroy']);
+});
 
+
+
+Route::middleware(['auth:sanctum', 'role:student'])->group(function () {
+
+    Route::post('/courses/{id}/enroll', [CourseController::class, 'enroll']);
 });
