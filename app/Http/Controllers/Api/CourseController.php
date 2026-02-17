@@ -100,7 +100,7 @@ class CourseController extends Controller
         if (!$course) {
             return response()->json(['message' => 'Course tidak ditemukan'], 404);
         }
- 
+
         $sudah = $user->courses()->where('courses.id', $id)->exists();
         if ($sudah) {
             return response()->json(['message' => 'Mahasiswa sudah terdaftar'], 400);

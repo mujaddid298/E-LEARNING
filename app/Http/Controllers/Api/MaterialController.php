@@ -23,9 +23,14 @@ class MaterialController extends Controller
     {
         $request->validate([
             'title' => 'required|string',
-            'file_path' => 'required|string|file|max:10240',
+            'file_path' => 'required|file|max:10240',
             'course_id' => 'required|exists:courses,id'
         ]);
+
+        $course = $request->course_id;
+        if (!$course) {
+            return response()->json(['message' => 'Course tidak ditemukan'], 404);
+        }
 
         $file = $request->file('file_path');
         $filePath = $file->store('materials', 'public');

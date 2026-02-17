@@ -10,13 +10,18 @@ class SubmissionContoller extends Controller
 {
     public function store(Request $request)
     {
-        $user = $request->user();
+        $user = $request->user()->id;
 
         $request->validate([
-            'file_path' => 'required|string|file|max:10240',
-            'assignment_id' => 'required|exists:assignment,id',
-            'score' => 'required|integer|nullable',
+            'file_path' => 'required|file|max:10240',
+            'assignment_id' => 'required|exists:assignments,id'
         ]);
+
+        $assign = $request->assignment_id;
+        if (!$assign) {
+            return response()->json(['message' => 'Assignment tidak ditemukan'], 404);
+        }
+
 
         $file = $request->file('file_path');
         $filePath = $file->store('submissions', 'public');
@@ -30,6 +35,22 @@ class SubmissionContoller extends Controller
         return response()->json(data: [
             'message' => 'Data submission berhasil dibuat',
             'data' => $submission
+        ]);
+    }
+
+    public function grade(Request $request, $id)
+    {
+        $request->validate([
+            'score' => 'required|integer|min:0|max:100',
+        ]);
+
+        $submission = Submissions::findOrFail($id);
+        $submission->score = $request->score;
+        $submission->save();
+
+        return response()->json([
+            'message' => 'Nilai berhasil diberikan',
+            'data'    => $submission
         ]);
     }
 }
