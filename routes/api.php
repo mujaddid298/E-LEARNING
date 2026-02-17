@@ -39,6 +39,8 @@ Route::middleware(['auth:sanctum', 'role:lecturer'])->group(function () {
 
 
     Route::post('/assigments', [AssignmentContoller::class, 'store']);
+
+    Route::post('/submissions/{id}/grade', [SubmissionContoller::class, 'grade']);
 });
 
 
@@ -48,6 +50,4 @@ Route::middleware(['auth:sanctum', 'role:student'])->group(function () {
     Route::post('/courses/{id}/enroll', [CourseController::class, 'enroll']);
 
     Route::post('/submissions', [SubmissionContoller::class, 'store']);
-    Route::post('/submissions/{id}/grade', [SubmissionContoller::class, 'store']);
-
 });

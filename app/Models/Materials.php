@@ -3,10 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Materials extends Model
 {
-    protected $table='materials';
+
+    use SoftDeletes;
+
+    protected $table = 'materials';
 
     protected $fillable = [
         'course_id',
@@ -15,7 +19,7 @@ class Materials extends Model
     ];
 
 
-        public function courses()
+    public function courses()
     {
         return $this->belongsToMany(Course::class);
     }
