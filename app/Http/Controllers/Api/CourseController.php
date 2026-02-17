@@ -22,8 +22,8 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'description' => 'nullable'
+            'name' => 'required|string',
+            'description' => 'nullable|string'
         ]);
 
         $course = new Course();
@@ -37,8 +37,6 @@ class CourseController extends Controller
             'data' => $course
         ]);
     }
-
-
 
     public function update(Request $request, $id)
     {
@@ -70,7 +68,6 @@ class CourseController extends Controller
             'data' => $course
         ]);
     }
-
 
     public function destroy(Request $request, $id)
     {

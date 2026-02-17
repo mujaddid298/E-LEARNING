@@ -22,8 +22,8 @@ class MaterialController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'file_path' => 'required|file|max:10240',
+            'title' => 'required|string',
+            'file_path' => 'required|string|file|max:10240',
             'course_id' => 'required|exists:courses,id'
         ]);
 
@@ -38,7 +38,7 @@ class MaterialController extends Controller
         $material->save();
 
         return response()->json([
-            'message' => 'Data course berhasil dibuat',
+            'message' => 'Data material berhasil dibuat',
             'data' => $material
         ]);
     }
@@ -47,14 +47,10 @@ class MaterialController extends Controller
     {
         $material = Materials::findOrFail($id);
 
-        if (!$material) {
-            return response()->json(['message' => 'Material tidak ditemukan']);
-        }
-
         if (!Storage::disk('public')->exists($material->file_path)) {
             return response()->json(['message' => 'File tidak ditemukan']);
         }
-
-        return Storage::disk('public')->download($material->file_path, $material->title);
+        $filePath = Storage::disk('public')->path($material->file_path);
+        return response()->download($filePath);
     }
 }
