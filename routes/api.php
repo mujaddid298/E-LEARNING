@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\MaterialController;
+use App\Http\Controllers\Api\ReportContoller;
 use App\Http\Controllers\Api\SubmissionContoller;
 
 Route::get('/user', function (Request $request) {
@@ -41,6 +42,10 @@ Route::middleware(['auth:sanctum', 'role:lecturer'])->group(function () {
     Route::post('/assigments', [AssignmentContoller::class, 'store']);
 
     Route::post('/submissions/{id}/grade', [SubmissionContoller::class, 'grade']);
+
+    Route::get('/reports/courses',[ReportContoller::class, 'courses']);
+    Route::get('/reports/assignments',[ReportContoller::class, 'assignments']);
+    Route::get('/reports/students/{id}',[ReportContoller::class, 'student']);
 });
 
 

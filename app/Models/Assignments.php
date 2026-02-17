@@ -9,7 +9,7 @@ class Assignments extends Model
 {
     use SoftDeletes;
 
-    protected $table='assignments';
+    protected $table = 'assignments';
 
     protected $fillable = [
         'title',
@@ -18,8 +18,13 @@ class Assignments extends Model
         'course_id',
     ];
 
-        public function courses()
+    public function courses()
     {
         return $this->belongsToMany(Course::class);
+    }
+
+    public function submissions()
+    {
+        return $this->hasMany(Submissions::class);
     }
 }
