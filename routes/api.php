@@ -5,9 +5,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CourseController;
+use App\Http\Controllers\Api\DiscussionController;
 use App\Http\Controllers\Api\MaterialController;
-use App\Http\Controllers\Api\ReportContoller;
-use App\Http\Controllers\Api\SubmissionContoller;
+use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\SubmissionController;
+use Illuminate\Support\Facades\Broadcast;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -41,11 +43,11 @@ Route::middleware(['auth:sanctum', 'role:lecturer'])->group(function () {
 
     Route::post('/assigments', [AssignmentContoller::class, 'store']);
 
-    Route::post('/submissions/{id}/grade', [SubmissionContoller::class, 'grade']);
+    Route::post('/submissions/{id}/grade', [SubmissionController::class, 'grade']);
 
-    Route::get('/reports/courses',[ReportContoller::class, 'courses']);
-    Route::get('/reports/assignments',[ReportContoller::class, 'assignments']);
-    Route::get('/reports/students/{id}',[ReportContoller::class, 'student']);
+    Route::get('/reports/courses', [ReportController::class, 'courses']);
+    Route::get('/reports/assignments', [ReportController::class, 'assignments']);
+    Route::get('/reports/students/{id}', [ReportController::class, 'student']);
 });
 
 
@@ -54,5 +56,14 @@ Route::middleware(['auth:sanctum', 'role:student'])->group(function () {
 
     Route::post('/courses/{id}/enroll', [CourseController::class, 'enroll']);
 
-    Route::post('/submissions', [SubmissionContoller::class, 'store']);
+    Route::post('/submissions', [SubmissionController::class, 'store']);
 });
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/discussions', [DiscussionController::class, 'store']);
+    Route::post('/discussions/{id}/replies', [DiscussionController::class, 'replies']);
+});
+
+Broadcast::routes();
