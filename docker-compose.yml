@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+
+  app:
+    build: .
+    container_name: elearning
+    volumes:
+      - .:/var/www
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:latest
+    container_name: laravel_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8
+    container_name: elearning_db
+    environment:
+      MYSQL_DATABASE: elearning
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  reverb:
+    build: .
+    container_name: elearning_reverb
+    command: php artisan reverb:start --host=0.0.0.0 --port=8081
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    ports:
+      - "8081:8081"
+    depends_on:
+      - app
+
+
+  queue:
+    build: .
+    container_name: elearning_queue
+    command: php artisan queue:work
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    depends_on:
+      - db
+
+volumes:
+  dbdata:
