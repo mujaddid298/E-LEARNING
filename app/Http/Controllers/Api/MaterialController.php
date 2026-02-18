@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Materials;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +28,7 @@ class MaterialController extends Controller
             'course_id' => 'required|exists:courses,id'
         ]);
 
-        $course = $request->course_id;
+        $course = Course::find($request->course_id);
         if (!$course) {
             return response()->json(['message' => 'Course tidak ditemukan'], 404);
         }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Mail\AssignmentMail;
 use App\Models\Assignments;
+use App\Models\Course;
 use App\Models\Discussions;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,6 +21,14 @@ class AssignmentContoller extends Controller
             'deadline' => 'required|date',
             'course_id' => 'required|exists:courses,id'
         ]);
+
+        $course = Course::find($request->course_id);
+
+        if (!$course) {
+            return response()->json([
+                'message' => 'Course tidak ditemukan'
+            ]);
+        }
 
         $assignment = new Assignments();
         $assignment->title = $request->title;
