@@ -19,7 +19,6 @@ class DiscussionController extends Controller
 
 
         $course = Course::find($request->course_id);
-
         if (!$course) {
             return response()->json(['message' => 'Mahasiswa tidak terdaftar']);
         }
@@ -30,7 +29,7 @@ class DiscussionController extends Controller
         $discussion->user_id = $request->user()->id;
         $discussion->save();
 
-       broadcast(new DiscussionEvents($discussion))->toOthers();
+        broadcast(new DiscussionEvents($discussion))->toOthers();
 
         return response()->json([
             'message' => 'Berhasil membuat discussion',
