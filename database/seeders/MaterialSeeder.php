@@ -17,9 +17,8 @@ class MaterialSeeder extends Seeder
 
         foreach ($courses as $course) {
             $pdfFiles = [
-                'Pendahuluan.pdf',
-                'Modul 1.pdf',
-                'Modul 2.pdf'
+                'tugas1.pdf',
+                'tugas2.pdf',
             ];
 
             foreach ($pdfFiles as $fileName) {
