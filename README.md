@@ -36,7 +36,7 @@ Copy env dan Key generate:
 ```
 cp .env.example .env
 php artisan key:generate
-
+````
 ## Endpoint Utama
 
 Course
@@ -69,7 +69,7 @@ Aktifkan link storage:
 
 ```
 php artisan storage:link
-
+````
 
 ## Setup Reverb
 
@@ -77,39 +77,40 @@ Install package:
 
 ```
 composer require laravel/reverb
-
+````
 
 Publish config:
 
 ```
 php artisan reverb:install
-
+````
 
 ## Menjalankan Reverb Server
 
 Jalankan server websocket:
 ```
 php artisan reverb:start
-
+````
 Jalankan juga queue & app server:
 ```
 php artisan queue:work
 php artisan serve
-
+npm run dev
+````
 
 ## Test realtime
 akses:
 ```
 http://127.0.0.1:8000/test/discussion
 http://127.0.0.1:8000/test/replies
-
-dan coba lakukan pembuatan Discussion dan Rieplai di postman 
-
-```
-dengan endpoint:
+````
+dan coba lakukan pembuatan Discussion dan Rieplai di postman dengan endpoint:
 ```
 POST /api/discussions
 POST /api/discussions/{id}/replies
+````
+
+
 
 
 
