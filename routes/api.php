@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\DiscussionController;
 use App\Http\Controllers\Api\MaterialController;
+use App\Http\Controllers\Api\RepliesController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\SubmissionController;
 use Illuminate\Support\Facades\Broadcast;
@@ -63,7 +64,7 @@ Route::middleware(['auth:sanctum', 'role:student'])->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/discussions', [DiscussionController::class, 'store']);
-    Route::post('/discussions/{id}/replies', [DiscussionController::class, 'replies']);
+    Route::post('/discussions/{id}/replies', [RepliesController::class, 'replies']);
 });
 
 Broadcast::routes();

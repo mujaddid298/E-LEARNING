@@ -22,7 +22,7 @@ class SubmissionController extends Controller
 
         $assign = $request->assignment_id;
         if (!$assign) {
-            return response()->json(['message' => 'Assignment tidak ditemukan'], 404);
+            return response()->json(['message' => 'Assignment tidak ditemukan']);
         }
 
 

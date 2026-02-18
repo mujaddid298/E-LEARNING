@@ -10,3 +10,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('discussion.{courseId}', function ($user, $courseId) {
     return true;
 });
+
+Broadcast::channel('replies.{discussionId}', function ($user, $discussionId) {
+    return true;
+});
