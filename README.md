@@ -30,7 +30,7 @@ Clone repository:
 git clone https://github.com/mujaddid298/E-LEARNING.git
 cd elearning
 composer install
-
+````
 Copy env dan Key generate:
 
 ```
