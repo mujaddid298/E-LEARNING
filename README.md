@@ -74,13 +74,16 @@ php artisan storage:link
 ## Setup Reverb
 
 Install package:
+
 ```
 composer require laravel/reverb
 
 
 Publish config:
+
 ```
 php artisan reverb:install
+
 
 ## Menjalankan Reverb Server
 
